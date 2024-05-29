@@ -6,7 +6,11 @@ from sklearn import svm
 from sklearn.metrics import accuracy_score
 
 #loading diabetes dataset to a pandas DataFrame
+<<<<<<< HEAD
 diabetes_dataset = pd.read_csv("data.csv")
+=======
+diabetes_dataset = pd.read_csv("diabetes.csv")
+>>>>>>> 8384a151922bfe95601744685b784597e952ff93
 
 pd.read_csv
 
