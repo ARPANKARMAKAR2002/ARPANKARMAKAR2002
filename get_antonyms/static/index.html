@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Word Processor</title>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+    <script>
+        async function processWord() {
+            const word = document.getElementById('wordInput').value;
+            console.log(`Word: ${word}`);  // Debug message
+
+            try {
+                const response = await fetch('/process_word', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ word: word })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Response:', data);  // Debug message
+
+                let output = `
+                    <p><strong>Word:</strong> ${data.word}</p>
+                    <p><strong>Definitions:</strong> ${data.definitions.join(', ')}</p>
+                    <p><strong>Synonyms:</strong> ${data.synonyms.join(', ')}</p>
+                    <p><strong>Antonyms:</strong> ${data.antonyms.join(', ')}</p>
+                `;
+                document.getElementById('output').innerHTML = output;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="wordInput" placeholder="Enter a word">
+    <button onclick="processWord()">Process Word</button>
+    <div id="output"></div>
+</body>
+</html>
